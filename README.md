@@ -1,2 +1,2 @@
 # curso-django
-https://github.com/aleksandromelo/curso-django.git
+[![Build Status](https://app.travis-ci.com/aleksandromelo/curso-django.svg?branch=main)](https://app.travis-ci.com/aleksandromelo/curso-django)
