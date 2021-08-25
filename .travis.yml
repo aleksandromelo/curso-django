@@ -1,6 +1,7 @@
 language: python
+os: linux
 dist: xenial
-sudo: true
+#sudo: true
 
 
 python:
