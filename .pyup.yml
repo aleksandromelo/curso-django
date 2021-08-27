@@ -7,5 +7,5 @@ requirements:
 # see https://pyup.io/docs/configuration/ for all available options
 
 schedule: every week
-update: false
->>>>>>> 34ce04c954a7e7874841b4ab15b464d924c3f181
+update: all
+#>>>>>>> 34ce04c954a7e7874841b4ab15b464d924c3f181
