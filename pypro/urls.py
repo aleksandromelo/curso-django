@@ -20,5 +20,6 @@ from pypro.base import views
 from pypro.base.views import home
 
 urlpatterns = [
+    path("admin/", admin.site.urls),
     path('', views.home, name='home')
 ]
