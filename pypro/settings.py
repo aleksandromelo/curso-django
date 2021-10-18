@@ -14,7 +14,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import dj_database_url
-from coverage.annotate import os
+# from coverage.annotate import os
+import os
 from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +30,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())  # ['pythonprodjango-adm.herokuapp.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+# ['pythonprodjango-adm.herokuapp.com']
 
 AUTH_USER_MODEL = 'base.User'
 
@@ -80,11 +82,11 @@ WSGI_APPLICATION = 'pypro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3') #default_db_url: 'sqlite:////Users/Aleksandro/PycharmProjects/curso-django/db.sqlite3'
+default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+#'default_db_url: 'sqlite:////Users/Aleksandro/PycharmProjects/curso-django/db.sqlite3'
 parse_database = partial(dj_database_url.parse, conn_max_age=600)
 DATABASES = {
     'default': config('DATABASE_URL', default=default_db_url, cast=parse_database)
-
 }
 
 
@@ -94,15 +96,19 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+
     },
 ]
 
@@ -149,12 +155,13 @@ if AWS_ACCESS_KEY_ID:
 
     AWS_DEFAULT_ACL = 'private'
 
+    COLLECTFAST_STRATEGY = 'collectfast.strategies.boto3.Boto3Strategy'
+
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
     STATIC_S3_PATH = 'static'
     STATIC_ROOT = f'/{STATIC_S3_PATH}/'
     STATIC_URL = f'//s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/{STATIC_S3_PATH}/'
     ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
 
     DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
     DEFAULT_S3_PATH = 'media'
