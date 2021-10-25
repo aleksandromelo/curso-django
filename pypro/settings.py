@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 from functools import partial
-from pathlib import Path
+# from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import dj_database_url
@@ -21,7 +21,8 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +38,10 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 # ['pythonprodjango-adm.herokuapp.com']
 
 AUTH_USER_MODEL = 'base.User'
+
+LOGIN_URL = '/contas/login/'
+LOGIN_REDIRECT_URL = '/modulos/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 
@@ -93,8 +98,9 @@ if DEBUG:
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-# 'default_db_url: 'sqlite:////Users/Aleksandro/PycharmProjects/curso-django/db.sqlite3'
+
 parse_database = partial(dj_database_url.parse, conn_max_age=600)
+
 DATABASES = {
     'default': config('DATABASE_URL', default=default_db_url, cast=parse_database)
 }
@@ -161,11 +167,10 @@ if AWS_ACCESS_KEY_ID:
     AWS_QUERYSTRING_AUTH = True
     AWS_S3_CUSTOM_DOMAIN = None
 
+    COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
     COLLECTFAST_ENABLED = True
 
     AWS_DEFAULT_ACL = 'private'
-
-    COLLECTFAST_STRATEGY = 'collectfast.strategies.boto3.Boto3Strategy'
 
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
     STATIC_S3_PATH = 'static'
@@ -184,9 +189,9 @@ if AWS_ACCESS_KEY_ID:
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SENTRY_DSN=config('SENTRY_DSN', default=None)
+SENTRY_DSN = config('SENTRY_DSN', default=None)
 
 if SENTRY_DSN:
     sentry_sdk.init(
